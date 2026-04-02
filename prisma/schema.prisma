@@ -21,6 +21,8 @@ model User {
 
   accounts Account[]
   sessions Session[]
+  logs     Log[]
+  categories Category[]
 }
 
 // How the person logs in, ex: multiple providers (google, gmail, etc)
@@ -54,9 +56,33 @@ model Session {
 
 // Only used for email logins
 model VerificationToken {
+
   identifier String
   token      String
   expires    DateTime
 
   @@unique([identifier, token])
 }
+
+model Log {
+  id           String   @id @default(cuid())
+  userId       String
+  user         User     @relation(fields: [userId], references: [id])
+  time         DateTime @default(now())
+  ticketNumber String 
+  category     String
+
+  @@index([userId])
+}
+
+model Category {
+  id     String @id @default(cuid())
+  userId String
+  name   String
+
+  user User @relation(fields: [userId], references: [id])
+
+  @@unique([userId, name])
+  @@index([userId])
+}
+
