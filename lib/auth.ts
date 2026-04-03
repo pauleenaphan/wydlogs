@@ -1,7 +1,9 @@
-import type { NextAuthOptions } from "next-auth"
-import GithubProvider from "next-auth/providers/github"
-import { PrismaAdapter } from "@auth/prisma-adapter"
-import { prisma } from "@/lib/prisma"
+import { cache } from "react";
+import type { NextAuthOptions } from "next-auth";
+import { getServerSession } from "next-auth/next";
+import GithubProvider from "next-auth/providers/github";
+import { PrismaAdapter } from "@auth/prisma-adapter";
+import { prisma } from "@/lib/prisma";
 
 function requireEnv(name: string): string {
   const value = process.env[name];
@@ -19,11 +21,16 @@ export const authOptions: NextAuthOptions = {
   },
   callbacks: {
     session({ session, user }) {
+      const logCount =
+        "logCount" in user && typeof user.logCount === "number"
+          ? user.logCount
+          : 0;
       return {
         ...session,
         user: {
           ...session.user,
-          id: user.id, // Adds id into the session object so we can access
+          id: user.id,
+          logCount,
         },
       };
     },
@@ -35,4 +42,7 @@ export const authOptions: NextAuthOptions = {
     }),
   ],
 };
+
+/** One session read per request when called from multiple server components / actions. */
+export const getAppSession = cache(() => getServerSession(authOptions));
 

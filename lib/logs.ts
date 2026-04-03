@@ -1,10 +1,11 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
-import { getServerSession } from "next-auth/next";
-import { authOptions } from "@/lib/auth";
+import { getAppSession } from "@/lib/auth";
 import { endOfDay, startOfDay } from "@/lib/date-utils";
 import { prisma } from "@/lib/prisma";
+
+import { incrementCategoryHours } from "./category";
 
 export type GetLogsOptions = {
   from: Date;
@@ -13,9 +14,22 @@ export type GetLogsOptions = {
 };
 
 async function requireUserId(): Promise<string | null> {
-  const session = await getServerSession(authOptions);
+  const session = await getAppSession();
   if (!session?.user || !("id" in session.user)) return null;
   return session.user.id as string;
+}
+
+async function bumpUserAndCategoryAfterLog(
+  userId: string,
+  categoryName: string,
+) {
+  await Promise.all([
+    incrementCategoryHours(userId, categoryName),
+    prisma.user.update({
+      where: { id: userId },
+      data: { logCount: { increment: 1 } },
+    }),
+  ]);
 }
 
 export async function createLogs(formData: FormData) {
@@ -37,6 +51,7 @@ export async function createLogs(formData: FormData) {
         user: { connect: { id: userId } },
       },
     });
+    await bumpUserAndCategoryAfterLog(userId, last.category);
     revalidatePath("/dashboard");
     return;
   }
@@ -51,6 +66,7 @@ export async function createLogs(formData: FormData) {
       user: { connect: { id: userId } },
     },
   });
+  await bumpUserAndCategoryAfterLog(userId, category);
   revalidatePath("/dashboard");
 }
 
@@ -79,4 +95,40 @@ export async function editLogs(formData: FormData) {
     data: { ticketNumber, category },
   });
   revalidatePath("/dashboard");
+}
+
+export async function deleteLog(formData: FormData) {
+  const userId = await requireUserId();
+  if (!userId) return;
+  const id = String(formData.get("id") ?? "").trim();
+  if (!id) return;
+
+  let deleted = false;
+  await prisma.$transaction(async (tx) => {
+    const log = await tx.log.findFirst({ where: { id, userId } });
+    if (!log) return;
+
+    await tx.log.delete({ where: { id } });
+    deleted = true;
+
+    const user = await tx.user.findUnique({ where: { id: userId } });
+    if (user && user.logCount > 0) {
+      await tx.user.update({
+        where: { id: userId },
+        data: { logCount: { decrement: 1 } },
+      });
+    }
+
+    const cat = await tx.category.findUnique({
+      where: { userId_name: { userId, name: log.category } },
+    });
+    if (cat && cat.hours > 0) {
+      await tx.category.update({
+        where: { userId_name: { userId, name: log.category } },
+        data: { hours: { decrement: 1 } },
+      });
+    }
+  });
+
+  if (deleted) revalidatePath("/dashboard");
 }
