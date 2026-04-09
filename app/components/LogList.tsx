@@ -61,12 +61,12 @@ function LogRow({
         <div className='space-x-4'>
           <span className='font-medium tabular-nums'>{formatTime12h(time)}</span>
           <span>{log.ticketNumber}</span>
-          <span className='text-zinc-700'>{log.category}</span>
+          <span className='text-pastel-ink/80'>{log.category}</span>
         </div>
         <div className='flex items-center gap-2'>
           <button
             type='button'
-            className='rounded-lg border-2 border-zinc-900 p-2 text-zinc-900 hover:bg-zinc-100'
+            className='rounded-lg border-2 border-pastel-stroke p-2 text-pastel-ink transition-colors hover:bg-pastel-surface-hover'
             aria-label='Edit log'
             onClick={() => dialogRef.current?.showModal()}
           >
@@ -74,7 +74,7 @@ function LogRow({
           </button>
           <button
             type='button'
-            className='rounded-lg border-2 border-red-800 p-2 text-red-800 hover:bg-red-100'
+            className='rounded-lg border-2 border-pastel-danger bg-pastel-danger-soft p-2 text-pastel-danger-ink transition-colors hover:bg-pastel-danger-hover'
             aria-label='Delete log'
             onClick={handleDelete}
           >
@@ -85,7 +85,7 @@ function LogRow({
 
       <dialog
         ref={setDialogNode}
-        className='min-h-[min(28rem,65vh)] w-full max-w-2xl overflow-visible rounded-xl border-2 border-zinc-900 bg-white p-8 shadow-xl backdrop:bg-black/40'
+        className='min-h-[min(28rem,65vh)] w-full max-w-2xl overflow-visible rounded-xl border-2 border-pastel-stroke bg-card p-8 shadow-xl backdrop:bg-black/40'
         onClick={(e) => {
           if (e.target === dialogRef.current) dialogRef.current?.close();
         }}
@@ -113,14 +113,14 @@ function LogRow({
           <div className='flex justify-end gap-2 pt-2'>
             <button
               type='button'
-              className='rounded-lg border-2 px-4 py-2'
+              className='rounded-lg border-2 border-pastel-stroke/50 bg-card px-4 py-2 text-pastel-ink transition-colors hover:bg-pastel-surface-hover'
               onClick={() => dialogRef.current?.close()}
             >
               Cancel
             </button>
             <button
               type='submit'
-              className='rounded-lg border-2 border-zinc-900 bg-zinc-900 px-4 py-2 text-white'
+              className='rounded-lg border-2 border-pastel-stroke bg-pastel-pink px-4 py-2 font-medium text-pastel-ink transition-colors hover:bg-pastel-pink-hover'
             >
               Save
             </button>
@@ -139,7 +139,7 @@ export default function LogList({
   categoryOptions: CategorySelectOption[];
 }) {
   return (
-    <ul className='divide-y divide-gray-500 rounded-lg border-2 px-4'>
+    <ul className='panel-surface divide-y divide-pastel-stroke/40 rounded-lg px-4'>
       {logs.map((log) => (
         <LogRow
           key={log.id}

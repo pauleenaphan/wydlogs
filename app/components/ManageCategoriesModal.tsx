@@ -44,12 +44,12 @@ function CategoryRowEditor({
         id={`edit-cat-${category.id}`}
         value={name}
         onChange={(e) => setName(e.target.value)}
-        className='min-w-0 flex-1 rounded-lg border-2 border-zinc-900 px-2 py-1'
+        className='min-w-0 flex-1 rounded-lg border-2 border-pastel-stroke bg-card px-2 py-1 text-pastel-ink transition-colors hover:border-pastel-lilac-hover focus-visible:border-pastel-lilac-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-pastel-lilac/35'
         disabled={saving}
       />
       <button
         type='button'
-        className='rounded-lg border-2 border-zinc-900 px-2 py-1 disabled:opacity-50'
+        className='rounded-lg border-2 border-pastel-stroke bg-pastel-pink px-2 py-1 font-medium text-pastel-ink transition-colors hover:bg-pastel-pink-hover disabled:opacity-50'
         disabled={saving}
         onClick={handleSave}
       >
@@ -57,7 +57,7 @@ function CategoryRowEditor({
       </button>
       <button
         type='button'
-        className='rounded-lg border-2 px-2 py-1'
+        className='rounded-lg border-2 border-pastel-stroke/50 bg-card px-2 py-1 text-pastel-ink transition-colors hover:bg-pastel-surface-hover'
         disabled={saving}
         onClick={onCancel}
       >
@@ -103,7 +103,7 @@ export default function ManageCategoriesModal({
     <>
       <button
         type='button'
-        className='rounded-lg border-2 border-zinc-900 px-6 py-2'
+        className='rounded-lg border-2 border-pastel-stroke bg-pastel-lilac px-6 py-2 font-medium text-pastel-ink transition-colors hover:bg-pastel-lilac-hover'
         onClick={() => dialogRef.current?.showModal()}
       >
         Manage categories
@@ -111,7 +111,7 @@ export default function ManageCategoriesModal({
 
       <dialog
         ref={dialogRef}
-        className='min-h-[min(24rem,58vh)] w-full max-w-2xl rounded-xl border-2 border-zinc-900 bg-white p-8 shadow-xl backdrop:bg-black/40'
+        className='min-h-[min(24rem,58vh)] w-full max-w-2xl rounded-xl border-2 border-pastel-stroke bg-card p-8 shadow-xl backdrop:bg-black/40'
         onClick={(e) => {
           if (e.target === dialogRef.current) dialogRef.current?.close();
         }}
@@ -121,7 +121,7 @@ export default function ManageCategoriesModal({
             <h2 className='font-semibold'>Your categories</h2>
             <button
               type='button'
-              className='rounded-lg border-2 px-3 py-1'
+              className='rounded-lg border-2 border-pastel-stroke/50 bg-card px-3 py-1 text-pastel-ink transition-colors hover:bg-pastel-surface-hover'
               onClick={() => {
                 setEditingId(null);
                 dialogRef.current?.close();
@@ -132,12 +132,12 @@ export default function ManageCategoriesModal({
           </div>
 
           {categories.length === 0 ? (
-            <p className='text-zinc-600'>
+            <p className='text-pastel-ink/70'>
               No saved categories yet. They show up here after you log with a
               category.
             </p>
           ) : (
-            <ul className='divide-y divide-zinc-200 rounded-lg border border-zinc-200'>
+            <ul className='panel-surface-nested'>
               {categories.map((c) => (
                 <li
                   key={c.id}
@@ -156,14 +156,14 @@ export default function ManageCategoriesModal({
                     <>
                       <div className='flex flex-wrap items-baseline gap-x-3 gap-y-1'>
                         <span className='font-medium'>{c.name}</span>
-                        <span className='tabular-nums text-zinc-600'>
+                        <span className='tabular-nums text-pastel-ink/70'>
                           {c.hours} {c.hours === 1 ? 'hour' : 'hours'}
                         </span>
                       </div>
                       <div className='flex items-center gap-2'>
                         <button
                           type='button'
-                          className='rounded-lg border-2 border-zinc-900 p-2 text-zinc-900 hover:bg-zinc-100'
+                          className='rounded-lg border-2 border-pastel-stroke p-2 text-pastel-ink transition-colors hover:bg-pastel-surface-hover'
                           aria-label={`Edit category ${c.name}`}
                           onClick={() => setEditingId(c.id)}
                           disabled={deletingId === c.id}
@@ -172,7 +172,7 @@ export default function ManageCategoriesModal({
                         </button>
                         <button
                           type='button'
-                          className='rounded-lg border-2 border-red-800 p-2 text-red-800 hover:bg-red-100 disabled:opacity-50'
+                          className='rounded-lg border-2 border-pastel-danger bg-pastel-danger-soft p-2 text-pastel-danger-ink transition-colors hover:bg-pastel-danger-hover disabled:opacity-50'
                           aria-label={`Delete category ${c.name}`}
                           disabled={deletingId === c.id}
                           onClick={() => handleDelete(c.id, c.name)}

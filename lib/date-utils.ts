@@ -1,4 +1,4 @@
-import { format, isValid, parse } from 'date-fns';
+import { endOfMonth, format, isValid, parse, startOfMonth } from 'date-fns';
 
 /** `yyyy-MM-dd` in the runtime local calendar (for URLs and history). */
 export const DATE_KEY_FORMAT = 'yyyy-MM-dd';
@@ -11,6 +11,26 @@ export function formatDateKey(d: Date) {
 export function parseDateKey(ymd: string) {
   const d = parse(ymd, DATE_KEY_FORMAT, new Date());
   return isValid(d) ? d : new Date();
+}
+
+/** `yyyy-MM` for report month filter (URL). */
+export const MONTH_KEY_FORMAT = 'yyyy-MM';
+
+export function formatMonthKey(d: Date) {
+  return format(d, MONTH_KEY_FORMAT);
+}
+
+/** Parse `yyyy-MM` to the first instant of that month; invalid → current month. */
+export function parseMonthKey(ym: string) {
+  const trimmed = ym.trim();
+  if (!/^\d{4}-\d{2}$/.test(trimmed)) return startOfMonth(new Date());
+  const d = parse(`${trimmed}-01`, 'yyyy-MM-dd', new Date());
+  return isValid(d) ? startOfMonth(d) : startOfMonth(new Date());
+}
+
+export function monthRangeFromKey(ym: string) {
+  const from = parseMonthKey(ym);
+  return { from, to: endOfMonth(from) };
 }
 
 /** Local calendar day bounds (server / runtime timezone). */

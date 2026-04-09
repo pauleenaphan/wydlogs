@@ -1,21 +1,25 @@
 import type { Metadata } from 'next';
-import { IBM_Plex_Sans, Inter } from 'next/font/google';
+import { Poppins } from 'next/font/google';
 
 import Navbar from '@/app/components/Nav';
 import { Providers } from './providers';
 import './globals.css';
-import { cn } from "@/lib/utils";
+import { cn } from '@/lib/utils';
 
-const inter = Inter({subsets:['latin'],variable:'--font-sans'});
-
-const fontSans = IBM_Plex_Sans({
+const fontSans = Poppins({
   subsets: ['latin'],
   display: 'swap',
+  variable: '--font-sans',
+  weight: ['400', '500', '600', '700'],
 });
 
 export const metadata: Metadata = {
-  title: 'wydlogs',
-  description: 'wydlogs',
+  title: 'WydLogs',
+  description: 'Track your work hours',
+  icons: {
+    icon: '/wydLogLogo.png',
+    apple: '/wydLogLogo.png',
+  },
 };
 
 export default function RootLayout({
@@ -24,8 +28,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang='en' className={cn("font-sans", inter.variable)}>
-      <body className={`${fontSans.className} min-h-full flex flex-col antialiased`}>
+    <html lang='en' className={cn(fontSans.variable, 'font-sans')}>
+      <body
+        className={cn(fontSans.className, 'min-h-full flex flex-col antialiased')}
+      >
         <Providers>
           <Navbar />
           {children}

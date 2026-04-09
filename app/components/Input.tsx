@@ -23,7 +23,7 @@ export default function Input({
         type='text'
         defaultValue={defaultValue}
         required={required}
-        className='border-2 rounded-lg px-3 py-2'
+        className='rounded-lg border-2 border-pastel-stroke bg-card px-3 py-2 text-pastel-ink transition-colors placeholder:text-pastel-ink/40 hover:border-pastel-lilac-hover focus-visible:border-pastel-lilac-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-pastel-lilac/35'
         placeholder={placeholder}
       />
     </div>

@@ -19,17 +19,8 @@ async function requireUserId(): Promise<string | null> {
   return session.user.id as string;
 }
 
-async function bumpUserAndCategoryAfterLog(
-  userId: string,
-  categoryName: string,
-) {
-  await Promise.all([
-    incrementCategoryHours(userId, categoryName),
-    prisma.user.update({
-      where: { id: userId },
-      data: { logCount: { increment: 1 } },
-    }),
-  ]);
+async function bumpCategoryAfterLog(userId: string, categoryName: string) {
+  await incrementCategoryHours(userId, categoryName);
 }
 
 export async function createLogs(formData: FormData) {
@@ -51,9 +42,10 @@ export async function createLogs(formData: FormData) {
         user: { connect: { id: userId } },
       },
     });
-    await bumpUserAndCategoryAfterLog(userId, last.category);
+    await bumpCategoryAfterLog(userId, last.category);
     revalidatePath("/dashboard");
     revalidatePath("/history");
+    revalidatePath("/report");
     return;
   }
 
@@ -67,9 +59,10 @@ export async function createLogs(formData: FormData) {
       user: { connect: { id: userId } },
     },
   });
-  await bumpUserAndCategoryAfterLog(userId, category);
+  await bumpCategoryAfterLog(userId, category);
   revalidatePath("/dashboard");
   revalidatePath("/history");
+  revalidatePath("/report");
 }
 
 export async function getLogs(userId: string, options: GetLogsOptions) {
@@ -98,6 +91,7 @@ export async function editLogs(formData: FormData) {
   });
   revalidatePath("/dashboard");
   revalidatePath("/history");
+  revalidatePath("/report");
 }
 
 export async function deleteLog(formData: FormData) {
@@ -114,14 +108,6 @@ export async function deleteLog(formData: FormData) {
     await tx.log.delete({ where: { id } });
     deleted = true;
 
-    const user = await tx.user.findUnique({ where: { id: userId } });
-    if (user && user.logCount > 0) {
-      await tx.user.update({
-        where: { id: userId },
-        data: { logCount: { decrement: 1 } },
-      });
-    }
-
     const cat = await tx.category.findUnique({
       where: { userId_name: { userId, name: log.category } },
     });
@@ -136,5 +122,6 @@ export async function deleteLog(formData: FormData) {
   if (deleted) {
     revalidatePath("/dashboard");
     revalidatePath("/history");
+    revalidatePath("/report");
   }
 }

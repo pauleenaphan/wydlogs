@@ -24,8 +24,9 @@ dialog:modal {
 }
 
 @theme inline {
+  /* Fallback when --font-sans is not set; root layout sets Poppins via next/font. */
+  --font-sans: ui-sans-serif, system-ui, sans-serif;
   --font-heading: var(--font-sans);
-  --font-sans: var(--font-sans);
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
@@ -64,26 +65,50 @@ dialog:modal {
   --radius-2xl: calc(var(--radius) * 1.8);
   --radius-3xl: calc(var(--radius) * 2.2);
   --radius-4xl: calc(var(--radius) * 2.6);
+
+  /* Cream + warm neutrals (page base, cards, hovers) */
+  --color-cream: oklch(0.965 0.022 82);
+  --color-cream-card: oklch(0.992 0.006 82);
+  --color-cream-hover: oklch(0.952 0.028 78);
+
+  /* Pastel accents (buttons, nav hovers, highlights) */
+  --color-pastel-pink: oklch(0.89 0.065 348);
+  --color-pastel-pink-hover: oklch(0.81 0.09 348);
+  --color-pastel-lilac: oklch(0.91 0.04 305);
+  --color-pastel-lilac-hover: oklch(0.83 0.06 305);
+  --color-pastel-mint: oklch(0.9 0.045 165);
+  --color-pastel-mint-hover: oklch(0.8 0.07 165);
+  --color-pastel-sky: oklch(0.89 0.05 230);
+  --color-pastel-sky-hover: oklch(0.79 0.07 230);
+  --color-pastel-ink: oklch(0.3 0.028 72);
+  --color-pastel-stroke: oklch(0.58 0.035 72);
+  --color-pastel-surface: oklch(0.978 0.012 82);
+  --color-pastel-surface-hover: oklch(0.955 0.022 80);
+  --color-pastel-highlight: oklch(0.93 0.055 330);
+  --color-pastel-danger: oklch(0.55 0.14 25);
+  --color-pastel-danger-ink: oklch(0.42 0.14 22);
+  --color-pastel-danger-soft: oklch(0.94 0.04 25);
+  --color-pastel-danger-hover: oklch(0.88 0.06 22);
 }
 
 :root {
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.145 0 0);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.145 0 0);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.145 0 0);
+  --background: oklch(0.965 0.022 82);
+  --foreground: oklch(0.3 0.028 72);
+  --card: oklch(0.992 0.006 82);
+  --card-foreground: oklch(0.3 0.028 72);
+  --popover: oklch(0.992 0.006 82);
+  --popover-foreground: oklch(0.3 0.028 72);
   --primary: oklch(0.205 0 0);
   --primary-foreground: oklch(0.985 0 0);
   --secondary: oklch(0.97 0 0);
   --secondary-foreground: oklch(0.205 0 0);
-  --muted: oklch(0.97 0 0);
-  --muted-foreground: oklch(0.556 0 0);
+  --muted: oklch(0.955 0.015 82);
+  --muted-foreground: oklch(0.48 0.025 72);
   --accent: oklch(0.97 0 0);
   --accent-foreground: oklch(0.205 0 0);
   --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(0.922 0 0);
-  --input: oklch(0.922 0 0);
+  --border: oklch(0.88 0.02 82);
+  --input: oklch(0.9 0.018 82);
   --ring: oklch(0.708 0 0);
   --chart-1: oklch(0.87 0 0);
   --chart-2: oklch(0.556 0 0);
@@ -144,5 +169,17 @@ dialog:modal {
   }
   html {
     @apply font-sans;
+  }
+}
+
+/* Primary content panels (dashboard form, lists, sign-in) — one border + fill + lift */
+@layer components {
+  .panel-surface {
+    @apply border-2 border-pastel-stroke bg-card;
+    box-shadow: 0 8px 30px -12px oklch(0.55 0.04 72 / 0.12);
+  }
+
+  .panel-surface-nested {
+    @apply divide-y divide-pastel-stroke/40 rounded-lg border-2 border-pastel-stroke bg-card;
   }
 }

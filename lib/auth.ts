@@ -16,21 +16,19 @@ function requireEnv(name: string): string {
 export const authOptions: NextAuthOptions = {
   adapter: PrismaAdapter(prisma),
   secret: requireEnv("NEXTAUTH_SECRET"),
+  pages: {
+    signIn: "/auth/signin",
+  },
   session: {
     strategy: "database",
   },
   callbacks: {
     session({ session, user }) {
-      const logCount =
-        "logCount" in user && typeof user.logCount === "number"
-          ? user.logCount
-          : 0;
       return {
         ...session,
         user: {
           ...session.user,
           id: user.id,
-          logCount,
         },
       };
     },

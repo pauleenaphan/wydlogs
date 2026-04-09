@@ -6,19 +6,24 @@ import { getAppSession } from '@/lib/auth';
 export const metadata: Metadata = {
   title: 'Sign in',
   description:
-    'Sign in with GitHub to start logging your hours and categories.',
+    'Sign in with GitHub to return to your dashboard. Used when the app redirects you here to authenticate.',
 };
 
-export default async function Home() {
-  const session = await getAppSession();
+type Props = {
+  searchParams: Promise<{ callbackUrl?: string; error?: string }>;
+};
 
+export default async function AuthSignInPage({ searchParams }: Props) {
+  const session = await getAppSession();
   if (session) {
     redirect('/dashboard');
   }
 
+  const { callbackUrl, error } = await searchParams;
+
   return (
     <main className='flex min-h-dvh flex-col items-center justify-center px-4 py-16'>
-      <SignInForm showBackHome={false} />
+      <SignInForm callbackUrl={callbackUrl} error={error} />
     </main>
   );
 }

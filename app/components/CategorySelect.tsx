@@ -64,11 +64,11 @@ export default function CategorySelect({
       <Select.Root value={value} onValueChange={setValue}>
         <Select.Trigger
           aria-label='Category'
-          className='group flex w-full min-h-11 items-center justify-between gap-2 rounded-lg border-2 border-zinc-900 bg-white px-3 py-2 text-left'
+          className='group flex min-h-11 w-full items-center justify-between gap-2 rounded-lg border-2 border-pastel-stroke bg-card px-3 py-2 text-left text-pastel-ink transition-colors hover:bg-pastel-surface-hover'
         >
           <Select.Value placeholder='Select category' />
           <ChevronDownIcon
-            className='size-5 shrink-0 text-zinc-700 transition-transform duration-200 group-data-[state=open]:rotate-180'
+            className='size-5 shrink-0 text-pastel-ink/70 transition-transform duration-200 group-data-[state=open]:rotate-180'
             aria-hidden
           />
         </Select.Trigger>
@@ -80,14 +80,14 @@ export default function CategorySelect({
             align='start'
             avoidCollisions={!inModal}
             collisionPadding={inModal ? 0 : 16}
-            className='z-200 max-h-36 min-w-(--radix-select-trigger-width) overflow-y-auto overflow-x-hidden rounded-lg border-2 border-zinc-900 bg-white shadow-lg'
+            className='z-200 max-h-36 min-w-(--radix-select-trigger-width) overflow-y-auto overflow-x-hidden rounded-lg border-2 border-pastel-stroke bg-card shadow-lg'
           >
             <Select.Viewport className='p-1'>
               {options.map((c) => (
                 <Select.Item
                   key={c.value}
                   value={c.value}
-                  className='relative flex w-full cursor-pointer select-none items-center rounded-md py-2 pl-3 pr-8 outline-none data-disabled:pointer-events-none data-highlighted:bg-pink-200 data-[state=checked]:font-semibold'
+                  className='relative flex w-full cursor-pointer select-none items-center rounded-md py-2 pl-3 pr-8 text-pastel-ink outline-none transition-colors data-disabled:pointer-events-none data-highlighted:bg-pastel-lilac data-[state=checked]:font-semibold'
                 >
                   <Select.ItemText>{c.label}</Select.ItemText>
                 </Select.Item>
