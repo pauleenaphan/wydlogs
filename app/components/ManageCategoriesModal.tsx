@@ -3,7 +3,7 @@
 import { PencilSquareIcon, TrashIcon } from '@heroicons/react/24/outline';
 import { useRouter } from 'next/navigation';
 import { useRef, useState } from 'react';
-import { deleteCategory, updateCategory } from '@/lib/category';
+import { createCategory, deleteCategory, updateCategory } from '@/lib/category';
 
 export type CategoryRow = {
   id: string;
@@ -39,29 +39,90 @@ function CategoryRowEditor({
   }
 
   return (
-    <div className='flex flex-wrap items-center gap-2'>
+    <div className='flex w-full min-w-0 flex-col gap-2 sm:flex-row sm:items-center'>
       <input
         id={`edit-cat-${category.id}`}
         value={name}
         onChange={(e) => setName(e.target.value)}
-        className='min-w-0 flex-1 rounded-lg border-2 border-pastel-stroke bg-card px-2 py-1 text-pastel-ink transition-colors hover:border-pastel-lilac-hover focus-visible:border-pastel-lilac-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-pastel-lilac/35'
+        className='min-h-11 w-full min-w-0 flex-1 rounded-lg border-2 border-pastel-stroke bg-card px-3 py-2 text-pastel-ink transition-colors hover:border-pastel-lilac-hover focus-visible:border-pastel-lilac-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-pastel-lilac/35'
         disabled={saving}
+      />
+      <div className='flex shrink-0 flex-wrap gap-2'>
+        <button
+          type='button'
+          className='rounded-lg border-2 border-pastel-stroke bg-pastel-pink px-3 py-2 font-medium text-pastel-ink transition-colors hover:bg-pastel-pink-hover disabled:opacity-50'
+          disabled={saving}
+          onClick={handleSave}
+        >
+          Save
+        </button>
+        <button
+          type='button'
+          className='rounded-lg border-2 border-pastel-stroke/50 bg-card px-3 py-2 text-pastel-ink transition-colors hover:bg-pastel-surface-hover'
+          disabled={saving}
+          onClick={onCancel}
+        >
+          Cancel
+        </button>
+      </div>
+    </div>
+  );
+}
+
+function AddCategoryForm({
+  onAdded,
+  disabled,
+}: {
+  onAdded: () => void;
+  disabled?: boolean;
+}) {
+  const [name, setName] = useState('');
+  const [saving, setSaving] = useState(false);
+
+  async function handleAdd() {
+    const trimmed = name.trim();
+    if (!trimmed) return;
+    setSaving(true);
+    const result = await createCategory(trimmed);
+    setSaving(false);
+    if (!result) {
+      window.alert(
+        'Could not add category. The name may already exist or is invalid.',
+      );
+      return;
+    }
+    setName('');
+    onAdded();
+  }
+
+  return (
+    <div className='flex flex-col gap-2 sm:flex-row sm:flex-wrap sm:items-center'>
+      <label className='sr-only' htmlFor='new-category-name'>
+        New category name
+      </label>
+      <input
+        id='new-category-name'
+        type='text'
+        value={name}
+        onChange={(e) => setName(e.target.value)}
+        onKeyDown={(e) => {
+          if (e.key === 'Enter') {
+            e.preventDefault();
+            void handleAdd();
+          }
+        }}
+        placeholder='New category name'
+        className='min-w-0 flex-1 rounded-lg border-2 border-pastel-stroke bg-card px-3 py-2 text-pastel-ink transition-colors placeholder:text-pastel-ink/40 hover:border-pastel-lilac-hover focus-visible:border-pastel-lilac-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-pastel-lilac/35 sm:min-w-48'
+        disabled={saving || disabled}
+        autoComplete='off'
       />
       <button
         type='button'
-        className='rounded-lg border-2 border-pastel-stroke bg-pastel-pink px-2 py-1 font-medium text-pastel-ink transition-colors hover:bg-pastel-pink-hover disabled:opacity-50'
-        disabled={saving}
-        onClick={handleSave}
+        className='rounded-lg border-2 border-pastel-stroke bg-pastel-lilac px-4 py-2 font-medium text-pastel-ink transition-colors hover:bg-pastel-lilac-hover disabled:opacity-50'
+        disabled={saving || disabled || !name.trim()}
+        onClick={() => void handleAdd()}
       >
-        Save
-      </button>
-      <button
-        type='button'
-        className='rounded-lg border-2 border-pastel-stroke/50 bg-card px-2 py-1 text-pastel-ink transition-colors hover:bg-pastel-surface-hover'
-        disabled={saving}
-        onClick={onCancel}
-      >
-        Cancel
+        Add category
       </button>
     </div>
   );
@@ -118,7 +179,7 @@ export default function ManageCategoriesModal({
       >
         <div className='flex flex-col gap-4'>
           <div className='flex items-center justify-between gap-4'>
-            <h2 className='font-semibold'>Your categories</h2>
+            <h2 className='font-semibold text-2xl'>Your categories</h2>
             <button
               type='button'
               className='rounded-lg border-2 border-pastel-stroke/50 bg-card px-3 py-1 text-pastel-ink transition-colors hover:bg-pastel-surface-hover'
@@ -131,17 +192,29 @@ export default function ManageCategoriesModal({
             </button>
           </div>
 
+          <AddCategoryForm
+            onAdded={refresh}
+            disabled={editingId !== null}
+          />
+
+          <p className='text-sm text-pastel-ink/70'>
+            Names you add here show up in the category dropdown when you log.
+          </p>
+
           {categories.length === 0 ? (
             <p className='text-pastel-ink/70'>
-              No saved categories yet. They show up here after you log with a
-              category.
+              No rows yet—add your first category above.
             </p>
           ) : (
             <ul className='panel-surface-nested'>
               {categories.map((c) => (
                 <li
                   key={c.id}
-                  className='flex flex-col gap-2 px-3 py-2.5 sm:flex-row sm:items-center sm:justify-between'
+                  className={
+                    editingId === c.id
+                      ? 'min-w-0 px-3 py-2.5'
+                      : 'flex flex-col gap-2 px-3 py-2.5 sm:flex-row sm:items-center sm:justify-between'
+                  }
                 >
                   {editingId === c.id ? (
                     <CategoryRowEditor

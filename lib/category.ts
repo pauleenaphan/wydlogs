@@ -43,6 +43,8 @@ export async function createCategory(name: string) {
       data: { userId, name: trimmed, hours: 0 },
     });
     revalidatePath("/dashboard");
+    revalidatePath("/history");
+    revalidatePath("/report");
     return category;
   } catch {
     return null;
