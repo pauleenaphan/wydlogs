@@ -4,13 +4,14 @@ export default function Input({
   defaultValue,
   required,
   inputId,
+  placeholder
 }: {
   label: string;
   name: string;
   defaultValue?: string;
   required?: boolean;
-  /** Avoid duplicate DOM ids when several inputs share the same `name`. */
   inputId?: string;
+  placeholder?: string;
 }) {
   const id = inputId ?? name;
   return (
@@ -23,6 +24,7 @@ export default function Input({
         defaultValue={defaultValue}
         required={required}
         className='border-2 rounded-lg px-3 py-2'
+        placeholder={placeholder}
       />
     </div>
   );

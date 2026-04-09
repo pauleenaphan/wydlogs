@@ -1,3 +1,18 @@
+import { format, isValid, parse } from 'date-fns';
+
+/** `yyyy-MM-dd` in the runtime local calendar (for URLs and history). */
+export const DATE_KEY_FORMAT = 'yyyy-MM-dd';
+
+export function formatDateKey(d: Date) {
+  return format(d, DATE_KEY_FORMAT);
+}
+
+/** Parse `yyyy-MM-dd`; invalid values fall back to today. */
+export function parseDateKey(ymd: string) {
+  const d = parse(ymd, DATE_KEY_FORMAT, new Date());
+  return isValid(d) ? d : new Date();
+}
+
 /** Local calendar day bounds (server / runtime timezone). */
 export function startOfDay(d = new Date()) {
   const date = new Date(d);

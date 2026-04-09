@@ -53,6 +53,7 @@ export async function createLogs(formData: FormData) {
     });
     await bumpUserAndCategoryAfterLog(userId, last.category);
     revalidatePath("/dashboard");
+    revalidatePath("/history");
     return;
   }
 
@@ -68,6 +69,7 @@ export async function createLogs(formData: FormData) {
   });
   await bumpUserAndCategoryAfterLog(userId, category);
   revalidatePath("/dashboard");
+  revalidatePath("/history");
 }
 
 export async function getLogs(userId: string, options: GetLogsOptions) {
@@ -95,6 +97,7 @@ export async function editLogs(formData: FormData) {
     data: { ticketNumber, category },
   });
   revalidatePath("/dashboard");
+  revalidatePath("/history");
 }
 
 export async function deleteLog(formData: FormData) {
@@ -130,5 +133,8 @@ export async function deleteLog(formData: FormData) {
     }
   });
 
-  if (deleted) revalidatePath("/dashboard");
+  if (deleted) {
+    revalidatePath("/dashboard");
+    revalidatePath("/history");
+  }
 }
