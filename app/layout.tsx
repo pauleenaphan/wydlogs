@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { Poppins } from 'next/font/google';
+import Script from 'next/script';
 
 import Navbar from '@/app/components/Nav';
 import { Providers } from './providers';
@@ -32,6 +33,18 @@ export default function RootLayout({
       <body
         className={cn(fontSans.className, 'min-h-full flex flex-col antialiased')}
       >
+        <Script
+          src='https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js'
+          strategy='lazyOnload'
+        />
+        <Script id='onesignal-init' strategy='lazyOnload'>
+          {`
+            window.OneSignalDeferred = window.OneSignalDeferred || [];
+            OneSignalDeferred.push(async function (OneSignal) {
+              await OneSignal.init({ appId: '${process.env.ONESIGNAL_APP_ID}' });
+            });
+          `}
+        </Script>
         <Providers>
           <Navbar />
           {children}
