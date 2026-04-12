@@ -59,7 +59,7 @@ export default function MonthDropdown({ monthKey, className }: Props) {
       <Popover.Trigger
         type='button'
         className={cn(
-          'group flex min-h-11 w-full max-w-xs items-center justify-between gap-2 rounded-lg border-2 border-pastel-stroke bg-white px-3 py-2 text-left text-sm text-pastel-ink transition-colors hover:bg-pastel-surface-hover',
+          'group flex min-h-11 w-full max-w-xs items-center justify-between gap-2 rounded-lg border-2 border-pastel-stroke bg-white px-3 py-2 text-left text-sm text-pastel-ink transition-colors hover:bg-pastel-lilac',
           className,
         )}
       >
@@ -108,7 +108,7 @@ export default function MonthDropdown({ monthKey, className }: Props) {
                       'rounded-md border-2 py-2 text-center text-sm font-medium text-pastel-ink transition-colors',
                       isSelected
                         ? 'border-pastel-stroke bg-pastel-ink text-white'
-                        : 'border-transparent hover:bg-pastel-mint',
+                        : 'border-transparent hover:bg-pastel-lilac',
                     )}
                     onClick={() => selectMonth(monthIndex)}
                   >

@@ -27,7 +27,7 @@ export default function DateDropdown({ dateKey, className }: Props) {
       <Popover.Trigger
         type='button'
         className={cn(
-          'group flex min-h-11 w-full max-w-xs items-center justify-between gap-2 rounded-lg border-2 border-pastel-stroke bg-white px-3 py-2 text-left text-sm text-pastel-ink transition-colors hover:bg-pastel-surface-hover',
+          'group flex min-h-11 w-full max-w-xs items-center justify-between gap-2 rounded-lg border-2 border-pastel-stroke bg-white px-3 py-2 text-left text-sm text-pastel-ink transition-colors hover:bg-pastel-lilac',
           className,
         )}
       >

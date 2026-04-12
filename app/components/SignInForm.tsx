@@ -57,7 +57,7 @@ export default function SignInForm({
 
       <button
         type='button'
-        className='flex w-full items-center justify-center gap-2 rounded-lg border-2 border-pastel-stroke bg-pastel-pink px-4 py-3 text-sm font-medium text-pastel-ink transition-colors hover:bg-pastel-pink-hover'
+        className='flex w-full items-center justify-center gap-2 rounded-lg border-2 border-pastel-stroke bg-pastel-pink px-4 py-3 text-sm font-medium text-pastel-ink transition-colors hover:bg-pastel-lilac-hover'
         onClick={() => signIn('github', { callbackUrl: target })}
       >
         <GitHubMark className='size-5 shrink-0' aria-hidden />

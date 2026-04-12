@@ -64,7 +64,7 @@ export default function CategorySelect({
       <Select.Root value={value} onValueChange={setValue}>
         <Select.Trigger
           aria-label='Category'
-          className='group flex min-h-11 w-full items-center justify-between gap-2 rounded-lg border-2 border-pastel-stroke bg-card px-3 py-2 text-left text-pastel-ink transition-colors hover:bg-pastel-surface-hover'
+          className='group flex min-h-11 w-full items-center justify-between gap-2 rounded-lg border-2 border-pastel-stroke bg-card px-3 py-2 text-left text-pastel-ink transition-colors hover:bg-pastel-lilac'
         >
           <Select.Value placeholder='Select category' />
           <ChevronDownIcon

@@ -66,7 +66,7 @@ function LogRow({
         <div className='flex items-center gap-2'>
           <button
             type='button'
-            className='rounded-lg border-2 border-pastel-stroke p-2 text-pastel-ink transition-colors hover:bg-pastel-surface-hover'
+            className='rounded-lg border-2 border-pastel-stroke p-2 text-pastel-ink transition-colors hover:bg-pastel-lilac'
             aria-label='Edit log'
             onClick={() => dialogRef.current?.showModal()}
           >
@@ -113,14 +113,14 @@ function LogRow({
           <div className='flex justify-end gap-2 pt-2'>
             <button
               type='button'
-              className='rounded-lg border-2 border-pastel-stroke/50 bg-card px-4 py-2 text-pastel-ink transition-colors hover:bg-pastel-surface-hover'
+              className='rounded-lg border-2 border-pastel-stroke/50 bg-card px-4 py-2 text-pastel-ink transition-colors hover:bg-pastel-lilac'
               onClick={() => dialogRef.current?.close()}
             >
               Cancel
             </button>
             <button
               type='submit'
-              className='rounded-lg border-2 border-pastel-stroke bg-pastel-pink px-4 py-2 font-medium text-pastel-ink transition-colors hover:bg-pastel-pink-hover'
+              className='rounded-lg border-2 border-pastel-stroke bg-pastel-pink px-4 py-2 font-medium text-pastel-ink transition-colors hover:bg-pastel-lilac-hover'
             >
               Save
             </button>

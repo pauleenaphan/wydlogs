@@ -51,7 +51,7 @@ export default async function Dashboard() {
             <CategorySelect name='category' options={categorySelectOptions} />
             <button
               type='submit'
-              className='rounded-lg border-2 border-pastel-stroke bg-pastel-pink px-6 py-2 font-medium text-pastel-ink transition-colors hover:bg-pastel-pink-hover'
+              className='rounded-lg border-2 border-pastel-stroke bg-pastel-pink px-6 py-2 font-medium text-pastel-ink transition-colors hover:bg-pastel-lilac-hover'
             >
               Log
             </button>
@@ -60,7 +60,7 @@ export default async function Dashboard() {
             <input type='hidden' name='duplicateLast' value='1' />
             <button
               type='submit'
-              className='rounded-lg border-2 border-pastel-stroke bg-pastel-sky px-6 py-2 font-medium text-pastel-ink transition-colors hover:bg-pastel-sky-hover'
+              className='rounded-lg border-2 border-pastel-stroke bg-pastel-sky px-6 py-2 font-medium text-pastel-ink transition-colors hover:bg-pastel-lilac-hover'
             >
               Log same as last hour
             </button>

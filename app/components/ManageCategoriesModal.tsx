@@ -50,7 +50,7 @@ function CategoryRowEditor({
       <div className='flex shrink-0 flex-wrap gap-2'>
         <button
           type='button'
-          className='rounded-lg border-2 border-pastel-stroke bg-pastel-pink px-3 py-2 font-medium text-pastel-ink transition-colors hover:bg-pastel-pink-hover disabled:opacity-50'
+          className='rounded-lg border-2 border-pastel-stroke bg-pastel-pink px-3 py-2 font-medium text-pastel-ink transition-colors hover:bg-pastel-lilac-hover disabled:opacity-50'
           disabled={saving}
           onClick={handleSave}
         >
@@ -58,7 +58,7 @@ function CategoryRowEditor({
         </button>
         <button
           type='button'
-          className='rounded-lg border-2 border-pastel-stroke/50 bg-card px-3 py-2 text-pastel-ink transition-colors hover:bg-pastel-surface-hover'
+          className='rounded-lg border-2 border-pastel-stroke/50 bg-card px-3 py-2 text-pastel-ink transition-colors hover:bg-pastel-lilac'
           disabled={saving}
           onClick={onCancel}
         >
@@ -182,7 +182,7 @@ export default function ManageCategoriesModal({
             <h2 className='font-semibold text-2xl'>Your categories</h2>
             <button
               type='button'
-              className='rounded-lg border-2 border-pastel-stroke/50 bg-card px-3 py-1 text-pastel-ink transition-colors hover:bg-pastel-surface-hover'
+              className='rounded-lg border-2 border-pastel-stroke/50 bg-card px-3 py-1 text-pastel-ink transition-colors hover:bg-pastel-lilac'
               onClick={() => {
                 setEditingId(null);
                 dialogRef.current?.close();
@@ -236,7 +236,7 @@ export default function ManageCategoriesModal({
                       <div className='flex items-center gap-2'>
                         <button
                           type='button'
-                          className='rounded-lg border-2 border-pastel-stroke p-2 text-pastel-ink transition-colors hover:bg-pastel-surface-hover'
+                          className='rounded-lg border-2 border-pastel-stroke p-2 text-pastel-ink transition-colors hover:bg-pastel-lilac'
                           aria-label={`Edit category ${c.name}`}
                           onClick={() => setEditingId(c.id)}
                           disabled={deletingId === c.id}
