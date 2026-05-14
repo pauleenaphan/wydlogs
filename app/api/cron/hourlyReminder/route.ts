@@ -60,7 +60,7 @@ export async function POST(request: Request) {
   let heading = 'WydLogs';
   let body =
     'Time for your hourly check-in — what are you working on?';
-  let included_segments: string[] = ['Subscribed Users'];
+  let included_segments: string[] = ['Total Subscriptions'];
 
   try {
     const json = (await request.json()) as {
