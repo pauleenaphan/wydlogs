@@ -64,7 +64,7 @@ export default function CategorySelect({
       <Select.Root value={value} onValueChange={setValue}>
         <Select.Trigger
           aria-label='Category'
-          className='group flex min-h-11 w-full items-center justify-between gap-2 rounded-lg border-2 border-pastel-stroke bg-card px-3 py-2 text-left text-pastel-ink transition-colors hover:bg-pastel-lilac'
+          className='group flex min-h-11 w-full items-center justify-between gap-2 rounded-lg border-2 border-pastel-stroke bg-card px-3 py-2 text-left text-pastel-ink transition-colors hover:bg-pastel-surface-hover'
         >
           <Select.Value placeholder='Select category' />
           <ChevronDownIcon
@@ -87,7 +87,7 @@ export default function CategorySelect({
                 <Select.Item
                   key={c.value}
                   value={c.value}
-                  className='relative flex w-full cursor-pointer select-none items-center rounded-md py-2 pl-3 pr-8 text-pastel-ink outline-none transition-colors data-disabled:pointer-events-none data-highlighted:bg-pastel-lilac data-[state=checked]:font-semibold'
+                  className='relative flex w-full cursor-pointer select-none items-center rounded-md py-2 pl-3 pr-8 text-pastel-ink outline-none transition-colors data-disabled:pointer-events-none data-highlighted:bg-pastel-surface-hover data-[state=checked]:font-semibold'
                 >
                   <Select.ItemText>{c.label}</Select.ItemText>
                 </Select.Item>

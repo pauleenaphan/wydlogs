@@ -73,13 +73,13 @@ dialog:modal {
 
   /* Pastel accents (buttons, nav hovers, highlights) */
   --color-pastel-pink: oklch(0.89 0.065 348);
-  --color-pastel-pink-hover: oklch(0.81 0.09 348);
+  --color-pastel-pink-hover: oklch(0.84 0.08 348);
   --color-pastel-lilac: oklch(0.91 0.04 305);
   --color-pastel-lilac-hover: oklch(0.83 0.06 305);
   --color-pastel-mint: oklch(0.9 0.045 165);
   --color-pastel-mint-hover: oklch(0.8 0.07 165);
   --color-pastel-sky: oklch(0.89 0.05 230);
-  --color-pastel-sky-hover: oklch(0.79 0.07 230);
+  --color-pastel-sky-hover: oklch(0.83 0.065 230);
   --color-pastel-ink: oklch(0.3 0.028 72);
   --color-pastel-stroke: oklch(0.58 0.035 72);
   --color-pastel-surface: oklch(0.978 0.012 82);
@@ -162,7 +162,7 @@ dialog:modal {
 
 @layer base {
   * {
-    @apply border-border outline-ring/50;
+    @apply border-border outline-none;
   }
   body {
     @apply bg-background text-foreground;
@@ -170,6 +170,30 @@ dialog:modal {
   html {
     @apply font-sans;
   }
+}
+
+/* Style the native time input to blend with the pastel form fields */
+.time-input::-webkit-calendar-picker-indicator {
+  filter: opacity(0.5);
+  cursor: pointer;
+}
+.time-input::-webkit-calendar-picker-indicator:hover {
+  filter: opacity(0.8);
+}
+.time-input::-webkit-datetime-edit-fields-wrapper {
+  padding: 0;
+}
+.time-input::-webkit-datetime-edit-hour-field,
+.time-input::-webkit-datetime-edit-minute-field,
+.time-input::-webkit-datetime-edit-ampm-field {
+  padding: 2px 4px;
+  border-radius: 4px;
+}
+.time-input::-webkit-datetime-edit-hour-field:focus,
+.time-input::-webkit-datetime-edit-minute-field:focus,
+.time-input::-webkit-datetime-edit-ampm-field:focus {
+  background: oklch(0.955 0.022 80 / 0.6);
+  outline: none;
 }
 
 /* Primary content panels (dashboard form, lists, sign-in) — one border + fill + lift */

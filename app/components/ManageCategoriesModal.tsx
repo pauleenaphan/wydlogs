@@ -44,13 +44,13 @@ function CategoryRowEditor({
         id={`edit-cat-${category.id}`}
         value={name}
         onChange={(e) => setName(e.target.value)}
-        className='min-h-11 w-full min-w-0 flex-1 rounded-lg border-2 border-pastel-stroke bg-card px-3 py-2 text-pastel-ink transition-colors hover:border-pastel-lilac-hover focus-visible:border-pastel-lilac-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-pastel-lilac/35'
+        className='min-h-11 w-full min-w-0 flex-1 rounded-lg border-2 border-pastel-stroke bg-card px-3 py-2 text-pastel-ink transition-colors outline-none focus:outline-none focus-visible:outline-none'
         disabled={saving}
       />
       <div className='flex shrink-0 flex-wrap gap-2'>
         <button
           type='button'
-          className='rounded-lg border-2 border-pastel-stroke bg-pastel-pink px-3 py-2 font-medium text-pastel-ink transition-colors hover:bg-pastel-lilac-hover disabled:opacity-50'
+          className='rounded-lg border-2 border-pastel-stroke bg-pastel-pink px-3 py-2 font-medium text-pastel-ink transition-colors hover:bg-pastel-surface-hover disabled:opacity-50'
           disabled={saving}
           onClick={handleSave}
         >
@@ -58,7 +58,7 @@ function CategoryRowEditor({
         </button>
         <button
           type='button'
-          className='rounded-lg border-2 border-pastel-stroke/50 bg-card px-3 py-2 text-pastel-ink transition-colors hover:bg-pastel-lilac'
+          className='rounded-lg border-2 border-pastel-stroke/50 bg-card px-3 py-2 text-pastel-ink transition-colors hover:bg-pastel-surface-hover'
           disabled={saving}
           onClick={onCancel}
         >
@@ -112,13 +112,13 @@ function AddCategoryForm({
           }
         }}
         placeholder='New category name'
-        className='min-w-0 flex-1 rounded-lg border-2 border-pastel-stroke bg-card px-3 py-2 text-pastel-ink transition-colors placeholder:text-pastel-ink/40 hover:border-pastel-lilac-hover focus-visible:border-pastel-lilac-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-pastel-lilac/35 sm:min-w-48'
+        className='min-w-0 flex-1 rounded-lg border-2 border-pastel-stroke bg-card px-3 py-2 text-pastel-ink transition-colors placeholder:text-pastel-ink/40 outline-none focus:outline-none focus-visible:outline-none sm:min-w-48'
         disabled={saving || disabled}
         autoComplete='off'
       />
       <button
         type='button'
-        className='rounded-lg border-2 border-pastel-stroke bg-pastel-lilac px-4 py-2 font-medium text-pastel-ink transition-colors hover:bg-pastel-lilac-hover disabled:opacity-50'
+        className='rounded-lg border-2 border-pastel-stroke bg-pastel-pink px-4 py-2 font-medium text-pastel-ink transition-colors hover:bg-pastel-surface-hover disabled:opacity-50'
         disabled={saving || disabled || !name.trim()}
         onClick={() => void handleAdd()}
       >
@@ -164,7 +164,7 @@ export default function ManageCategoriesModal({
     <>
       <button
         type='button'
-        className='rounded-lg border-2 border-pastel-stroke bg-pastel-lilac px-6 py-2 font-medium text-pastel-ink transition-colors hover:bg-pastel-lilac-hover'
+        className='rounded-lg border-2 border-pastel-stroke bg-pastel-pink px-6 py-2 font-medium text-pastel-ink transition-colors hover:bg-pastel-surface-hover'
         onClick={() => dialogRef.current?.showModal()}
       >
         Manage categories
@@ -182,7 +182,7 @@ export default function ManageCategoriesModal({
             <h2 className='font-semibold text-2xl'>Your categories</h2>
             <button
               type='button'
-              className='rounded-lg border-2 border-pastel-stroke/50 bg-card px-3 py-1 text-pastel-ink transition-colors hover:bg-pastel-lilac'
+              className='rounded-lg border-2 border-pastel-stroke/50 bg-card px-3 py-1 text-pastel-ink transition-colors hover:bg-pastel-surface-hover'
               onClick={() => {
                 setEditingId(null);
                 dialogRef.current?.close();
@@ -236,7 +236,7 @@ export default function ManageCategoriesModal({
                       <div className='flex items-center gap-2'>
                         <button
                           type='button'
-                          className='rounded-lg border-2 border-pastel-stroke p-2 text-pastel-ink transition-colors hover:bg-pastel-lilac'
+                          className='rounded-lg border-2 border-pastel-stroke p-2 text-pastel-ink transition-colors hover:bg-pastel-surface-hover'
                           aria-label={`Edit category ${c.name}`}
                           onClick={() => setEditingId(c.id)}
                           disabled={deletingId === c.id}

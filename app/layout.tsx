@@ -23,6 +23,9 @@ export const metadata: Metadata = {
   },
 };
 
+const isProduction = process.env.NODE_ENV === 'production';
+const oneSignalAppId = isProduction ? process.env.ONESIGNAL_APP_ID : null;
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -33,18 +36,22 @@ export default function RootLayout({
       <body
         className={cn(fontSans.className, 'min-h-full flex flex-col antialiased')}
       >
-        <Script
-          src='https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js'
-          strategy='lazyOnload'
-        />
-        <Script id='onesignal-init' strategy='lazyOnload'>
-          {`
-            window.OneSignalDeferred = window.OneSignalDeferred || [];
-            OneSignalDeferred.push(async function (OneSignal) {
-              await OneSignal.init({ appId: '${process.env.ONESIGNAL_APP_ID}' });
-            });
-          `}
-        </Script>
+        {oneSignalAppId ? (
+          <>
+            <Script
+              src='https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js'
+              strategy='lazyOnload'
+            />
+            <Script id='onesignal-init' strategy='lazyOnload'>
+              {`
+                window.OneSignalDeferred = window.OneSignalDeferred || [];
+                OneSignalDeferred.push(async function (OneSignal) {
+                  await OneSignal.init({ appId: '${oneSignalAppId}' });
+                });
+              `}
+            </Script>
+          </>
+        ) : null}
         <Providers>
           <Navbar />
           {children}

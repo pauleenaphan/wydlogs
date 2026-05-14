@@ -57,7 +57,7 @@ export default function SignInForm({
 
       <button
         type='button'
-        className='flex w-full items-center justify-center gap-2 rounded-lg border-2 border-pastel-stroke bg-pastel-pink px-4 py-3 text-sm font-medium text-pastel-ink transition-colors hover:bg-pastel-lilac-hover'
+        className='flex w-full items-center justify-center gap-2 rounded-lg border-2 border-pastel-stroke bg-pastel-pink px-4 py-3 text-sm font-medium text-pastel-ink transition-colors hover:bg-pastel-surface-hover'
         onClick={() => signIn('github', { callbackUrl: target })}
       >
         <GitHubMark className='size-5 shrink-0' aria-hidden />
@@ -73,7 +73,7 @@ export default function SignInForm({
         <div className='border-t border-pastel-stroke/40 pt-4 text-center'>
           <Link
             href='/'
-            className='text-sm font-medium text-pastel-ink underline-offset-4 transition-colors hover:text-pastel-lilac-hover hover:underline'
+            className='text-sm font-medium text-pastel-ink underline-offset-4 transition-colors hover:text-pastel-ink/60 hover:underline'
           >
             ← Back home
           </Link>

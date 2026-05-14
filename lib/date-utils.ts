@@ -46,15 +46,37 @@ export function endOfDay(d = new Date()) {
   return date;
 }
 
+const REMINDER_START_HOUR = 10; // 10am CST
+const REMINDER_END_HOUR = 17;  // 5pm CST
+
 /**
- * Start of the **next** clock hour in local time (minutes/seconds/ms zeroed, then +1 hour).
- * e.g. 8:30am → 9:00am; 8:00am (any sub-minute time) → 9:00am; 11:15pm → 12:00am next day.
+ * Next reminder hour within the 10am–5pm CST window.
+ * - Current hour + 1, clamped to the window.
+ * - If past 5pm (or at 5pm+), returns 10am the next day.
+ * - If before 10am, returns 10am today.
  */
-export function getNextSolidHour(d = new Date()) {
-  const date = new Date(d);
-  date.setMinutes(0, 0, 0);
-  date.setHours(date.getHours() + 1);
-  return date;
+export function getNextReminderHour(d = new Date()): Date {
+  const cst = new Date(
+    d.toLocaleString('en-US', { timeZone: 'America/Chicago' }),
+  );
+  const currentHour = cst.getHours();
+
+  let nextHour: number;
+  let dayOffset = 0;
+
+  if (currentHour < REMINDER_START_HOUR) {
+    nextHour = REMINDER_START_HOUR;
+  } else if (currentHour >= REMINDER_END_HOUR) {
+    nextHour = REMINDER_START_HOUR;
+    dayOffset = 1;
+  } else {
+    nextHour = currentHour + 1;
+  }
+
+  const result = new Date(cst);
+  result.setDate(result.getDate() + dayOffset);
+  result.setHours(nextHour, 0, 0, 0);
+  return result;
 }
 
 /** e.g. `Tuesday, April 4` in local time (weekday + month + day). */

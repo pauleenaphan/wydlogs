@@ -11,7 +11,7 @@ import {
   endOfDay,
   formatTime12h,
   formatWeekdayMonthDay,
-  getNextSolidHour,
+  getNextReminderHour,
   startOfDay,
 } from '@/lib/date-utils';
 import { createLogs, getLogs } from '@/lib/logs';
@@ -35,7 +35,7 @@ export default async function Dashboard() {
   const categories = await getCategories(userId);
   const categorySelectOptions = mergeCategorySelectOptions(categories);
   const todayLabel = formatWeekdayMonthDay();
-  const nextReminderLabel = formatTime12h(getNextSolidHour());
+  const nextReminderLabel = formatTime12h(getNextReminderHour());
 
   return (
     <div className='w-3/5 p-4 mx-auto flex justify-between gap-12'>
@@ -51,7 +51,7 @@ export default async function Dashboard() {
             <CategorySelect name='category' options={categorySelectOptions} />
             <button
               type='submit'
-              className='rounded-lg border-2 border-pastel-stroke bg-pastel-pink px-6 py-2 font-medium text-pastel-ink transition-colors hover:bg-pastel-lilac-hover'
+              className='rounded-lg border-2 border-pastel-stroke bg-pastel-pink px-6 py-2 font-medium text-pastel-ink transition-colors hover:bg-pastel-pink-hover'
             >
               Log
             </button>
@@ -60,7 +60,7 @@ export default async function Dashboard() {
             <input type='hidden' name='duplicateLast' value='1' />
             <button
               type='submit'
-              className='rounded-lg border-2 border-pastel-stroke bg-pastel-sky px-6 py-2 font-medium text-pastel-ink transition-colors hover:bg-pastel-lilac-hover'
+              className='rounded-lg border-2 border-pastel-stroke bg-pastel-sky px-6 py-2 font-medium text-pastel-ink transition-colors hover:bg-pastel-sky-hover'
             >
               Log same as last hour
             </button>

@@ -82,13 +82,24 @@ export async function editLogs(formData: FormData) {
   const id = String(formData.get("id") ?? "");
   const ticketNumber = String(formData.get("ticketNumber") ?? "").trim();
   const category = String(formData.get("category") ?? "").trim();
+  const timeRaw = String(formData.get("time") ?? "").trim();
   if (!id || !ticketNumber || !category) return;
   const existing = await prisma.log.findFirst({ where: { id, userId } });
   if (!existing) return;
-  await prisma.log.update({
-    where: { id },
-    data: { ticketNumber, category },
-  });
+
+  const data: { ticketNumber: string; category: string; time?: Date } = {
+    ticketNumber,
+    category,
+  };
+
+  if (timeRaw) {
+    const parsed = new Date(timeRaw);
+    if (!isNaN(parsed.getTime())) {
+      data.time = parsed;
+    }
+  }
+
+  await prisma.log.update({ where: { id }, data });
   revalidatePath("/dashboard");
   revalidatePath("/history");
   revalidatePath("/report");

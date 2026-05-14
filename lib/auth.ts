@@ -35,8 +35,8 @@ export const authOptions: NextAuthOptions = {
   },
   providers: [
     GithubProvider({
-      clientId: requireEnv(process.env.NODE_ENV === 'development' ? 'GITHUB_ID_PROD' : 'GITHUB_ID_LOCAL'),
-      clientSecret: requireEnv(process.env.NODE_ENV === 'development' ? 'GITHUB_SECRET_PROD' : 'GITHUB_SECRET_LOCAL'),
+      clientId: requireEnv(process.env.NODE_ENV === 'development' ? 'GITHUB_ID_LOCAL' : 'GITHUB_ID_PROD'),
+      clientSecret: requireEnv(process.env.NODE_ENV === 'development' ? 'GITHUB_SECRET_LOCAL' : 'GITHUB_SECRET_PROD'),
     }),
   ],
 };

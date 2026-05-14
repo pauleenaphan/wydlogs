@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
 const navLinkClass =
-  'rounded-lg px-3 py-1.5 text-pastel-ink transition-colors hover:bg-pastel-lilac';
+  'px-3 py-1.5 text-pastel-ink transition-all hover:font-semibold';
 
 export default function Navbar() {
   const pathname = usePathname();
@@ -12,7 +12,7 @@ export default function Navbar() {
     return null;
 
   return (
-    <div className='mb-8 flex items-center justify-center gap-2 border-b border-pastel-stroke/35 bg-card/90 p-4 backdrop-blur-sm sm:gap-6'>
+    <div className='mb-8 flex items-center justify-center gap-2 border-b border-pastel-stroke/35 p-4 backdrop-blur-sm sm:gap-6'>
       <Link href='/dashboard' className={navLinkClass}>
         Home
       </Link>

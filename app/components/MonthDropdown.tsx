@@ -59,7 +59,7 @@ export default function MonthDropdown({ monthKey, className }: Props) {
       <Popover.Trigger
         type='button'
         className={cn(
-          'group flex min-h-11 w-full max-w-xs items-center justify-between gap-2 rounded-lg border-2 border-pastel-stroke bg-white px-3 py-2 text-left text-sm text-pastel-ink transition-colors hover:bg-pastel-lilac',
+          'group flex min-h-11 w-full max-w-xs items-center justify-between gap-2 rounded-lg border-2 border-pastel-stroke bg-white px-3 py-2 text-left text-sm text-pastel-ink transition-colors hover:bg-pastel-surface-hover',
           className,
         )}
       >
@@ -78,7 +78,7 @@ export default function MonthDropdown({ monthKey, className }: Props) {
             <div className='mb-3 flex items-center justify-between gap-2'>
               <button
                 type='button'
-                className='rounded-lg border-2 border-pastel-stroke p-1.5 text-pastel-ink transition-colors hover:bg-pastel-lilac'
+                className='rounded-lg border-2 border-pastel-stroke p-1.5 text-pastel-ink transition-colors hover:bg-pastel-surface-hover'
                 aria-label='Previous year'
                 onClick={() => setViewYear((y) => y - 1)}
               >
@@ -89,7 +89,7 @@ export default function MonthDropdown({ monthKey, className }: Props) {
               </span>
               <button
                 type='button'
-                className='rounded-lg border-2 border-pastel-stroke p-1.5 text-pastel-ink transition-colors hover:bg-pastel-lilac'
+                className='rounded-lg border-2 border-pastel-stroke p-1.5 text-pastel-ink transition-colors hover:bg-pastel-surface-hover'
                 aria-label='Next year'
                 onClick={() => setViewYear((y) => y + 1)}
               >
@@ -108,7 +108,7 @@ export default function MonthDropdown({ monthKey, className }: Props) {
                       'rounded-md border-2 py-2 text-center text-sm font-medium text-pastel-ink transition-colors',
                       isSelected
                         ? 'border-pastel-stroke bg-pastel-ink text-white'
-                        : 'border-transparent hover:bg-pastel-lilac',
+                        : 'border-transparent hover:bg-pastel-surface-hover',
                     )}
                     onClick={() => selectMonth(monthIndex)}
                   >

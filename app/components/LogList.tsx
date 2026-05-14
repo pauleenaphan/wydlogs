@@ -6,6 +6,7 @@ import { deleteLog, editLogs } from '@/lib/logs';
 import { formatTime12h } from '@/lib/date-utils';
 import CategorySelect from '@/app/components/CategorySelect';
 import Input from '@/app/components/Input';
+import TimePicker from '@/app/components/TimePicker';
 import type { CategorySelectOption } from '@/lib/category-select-options';
 
 export type DashboardLog = {
@@ -17,6 +18,19 @@ export type DashboardLog = {
 
 function toDate(value: Date | string) {
   return typeof value === 'string' ? new Date(value) : value;
+}
+
+/** Format a Date to `HH:mm` for <input type="time"> */
+function toTimeInputValue(d: Date): string {
+  return `${String(d.getHours()).padStart(2, '0')}:${String(d.getMinutes()).padStart(2, '0')}`;
+}
+
+/** Merge an `HH:mm` value onto an existing Date (keeping the same day). */
+function applyTimeToDate(original: Date, timeStr: string): string {
+  const [h, m] = timeStr.split(':').map(Number);
+  const d = new Date(original);
+  d.setHours(h, m, 0, 0);
+  return d.toISOString();
 }
 
 function LogRow({
@@ -33,11 +47,14 @@ function LogRow({
     setDialogEl(node);
   }, []);
   const time = toDate(log.time);
+  const [editTime, setEditTime] = useState(() => toTimeInputValue(time));
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const form = e.currentTarget;
-    await editLogs(new FormData(form));
+    const fd = new FormData(form);
+    fd.set('time', applyTimeToDate(time, editTime));
+    await editLogs(fd);
     dialogRef.current?.close();
   }
 
@@ -66,7 +83,7 @@ function LogRow({
         <div className='flex items-center gap-2'>
           <button
             type='button'
-            className='rounded-lg border-2 border-pastel-stroke p-2 text-pastel-ink transition-colors hover:bg-pastel-lilac'
+            className='rounded-lg border-2 border-pastel-stroke p-2 text-pastel-ink transition-colors hover:bg-pastel-surface-hover'
             aria-label='Edit log'
             onClick={() => dialogRef.current?.showModal()}
           >
@@ -110,17 +127,26 @@ function LogRow({
             options={categoryOptions}
             portalContainer={dialogEl}
           />
+          <div className='flex flex-col gap-2'>
+            <span>Time</span>
+            <TimePicker
+              value={editTime}
+              onChange={setEditTime}
+              id={`edit-time-${log.id}`}
+              portalContainer={dialogEl}
+            />
+          </div>
           <div className='flex justify-end gap-2 pt-2'>
             <button
               type='button'
-              className='rounded-lg border-2 border-pastel-stroke/50 bg-card px-4 py-2 text-pastel-ink transition-colors hover:bg-pastel-lilac'
+              className='rounded-lg border-2 border-pastel-stroke/50 bg-card px-4 py-2 text-pastel-ink transition-colors hover:bg-pastel-surface-hover'
               onClick={() => dialogRef.current?.close()}
             >
               Cancel
             </button>
             <button
               type='submit'
-              className='rounded-lg border-2 border-pastel-stroke bg-pastel-pink px-4 py-2 font-medium text-pastel-ink transition-colors hover:bg-pastel-lilac-hover'
+              className='rounded-lg border-2 border-pastel-stroke bg-pastel-pink px-4 py-2 font-medium text-pastel-ink transition-colors hover:bg-pastel-surface-hover-hover'
             >
               Save
             </button>

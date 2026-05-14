@@ -20,7 +20,7 @@ export default function ReportClient({
 }: Props) {
   return (
     <div className='mx-auto w-3/5 space-y-4 p-4'>
-      <h1 className='text-2xl font-bold'> Reports </h1>
+      <h1 className='text-2xl font-bold'> Monthly Reports </h1>
       <MonthDropdown monthKey={monthKey} />
 
       <h1 className='text-xl pt-2 font-semibold'>Total hours by category</h1>
