@@ -29,10 +29,8 @@ function authorize(request: Request): boolean {
 }
 
 export async function POST(request: Request) {
-  if (
-    process.env.NODE_ENV === 'production' &&
-    !process.env.CRON_SECRET
-  ) {
+  console.log('[hourlyReminder] - Endpoint starting')
+  if ( process.env.NODE_ENV === 'production' && !process.env.CRON_SECRET ) {
     return NextResponse.json(
       { error: 'CRON_SECRET is not configured' },
       { status: 503 },
@@ -57,6 +55,7 @@ export async function POST(request: Request) {
     );
   }
 
+  console.log('[hourlyReminder] - Setting heading and body')
   let heading = 'WydLogs';
   let body =
     'Time for your hourly check-in — what are you working on?';
@@ -85,6 +84,7 @@ export async function POST(request: Request) {
     /* empty body */
   }
 
+  console.log('[hourlyReminder] - Calling onesignal')
   const response = await fetch(ONE_SIGNAL_PUSH_URL, {
     method: 'POST',
     headers: {
@@ -122,6 +122,7 @@ export async function POST(request: Request) {
     ? data.errors.map(String).filter(Boolean)
     : [];
 
+  console.log('[hourlyReminder] - Checking for errors')
   if (errorLines.length > 0) {
     const message = errorLines.join(' ');
     const hint =
@@ -162,6 +163,7 @@ export async function POST(request: Request) {
     );
   }
 
+  console.log('[hourlyReminder] - Done')
   return NextResponse.json({
     ok: true as const,
     notificationId: data.id,
